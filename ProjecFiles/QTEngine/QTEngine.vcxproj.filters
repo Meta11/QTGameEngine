@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Math">
+      <UniqueIdentifier>{db548571-80bd-4e88-b3a7-e32c4b6eff78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timing">
+      <UniqueIdentifier>{fe36213f-1be9-4180-8c32-ac13ae4e34d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug Tools">
+      <UniqueIdentifier>{1ea7c2b0-09a5-49e7-82f2-bbf9e5ee3104}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug Tools\Profiling">
+      <UniqueIdentifier>{b80039c6-2a78-4eb0-acf2-7f1b0fdab2b6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Clock.h">
+      <Filter>Timing</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix3D.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Profiler.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Vector3D.inl">
+      <Filter>Math</Filter>
+    </None>
+    <None Include="Matrix3D.inl">
+      <Filter>Math</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Clock.cpp">
+      <Filter>Timing</Filter>
+    </ClCompile>
+    <ClCompile Include="Profiler.cpp" />
+  </ItemGroup>
+</Project>

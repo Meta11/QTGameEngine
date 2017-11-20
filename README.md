@@ -1,2 +1,2 @@
 # QTGameEngine
-A game engine using QT and OpenGL
+A game engine under construction using QT and OpenGL
