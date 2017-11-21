@@ -1,7 +1,7 @@
 #include "Profiler.h"
 #include <fstream>
 
-using std::ofstream;
+static std::ofstream outStream;
 using std::ios;
 
 void Profiler::initialize(const char* fileName) {
@@ -12,24 +12,46 @@ void Profiler::initialize(const char* fileName) {
 }
 
 void Profiler::shutdown() {
+	writeData();
+}
 
-	ofstream outStream(fileName, ios::trunc);
+char Profiler::getDelimiter(int index) const {
+	return ((index + 1) < numUsedCategories ? ',' : '\n');
+}
+
+bool Profiler::wrapped() const {
+	return frameIndex >= MAX_FRAME_SAMPLES && frameIndex != -1;
+}
+
+void Profiler::writeData() const {
+	outStream.open(fileName, ios::trunc);
 	//headers
 	for (int i = 0; i < numUsedCategories; i++) {
 		outStream << categories[i].name;
 		outStream << getDelimiter(i);
 	}
 
-	unsigned int numactualFrames = frameIndex;
-	if (categoryIndex == numUsedCategories)
-		numactualFrames++;
-
-	for (unsigned int frame = 0; frame < numactualFrames; frame++) {
-		for (unsigned int cat = 0; cat < categoryIndex; cat++) {
-			outStream << categories[cat].samples[frame];
-			outStream << getDelimiter(cat);
+	unsigned int endIndex;
+	unsigned int startIndex;
+	if (wrapped()) {
+		endIndex = frameIndex % MAX_FRAME_SAMPLES;
+		startIndex = (endIndex + 1) % MAX_FRAME_SAMPLES;
+		while (startIndex != endIndex) {
+			writeFrame(startIndex);
+			startIndex = (startIndex + 1) % MAX_FRAME_SAMPLES;
 		}
+		writeFrame(startIndex);
 	}
+	else {
+		unsigned int numActualFrames = frameIndex;
+		if (currentFrameComplete())
+			numActualFrames++;
+		startIndex = 0;
+		endIndex = numActualFrames;
+		while (startIndex < endIndex)
+			writeFrame(startIndex++);
+	}
+	outStream.close();
 }
 
 void Profiler::newFrame() {
@@ -44,9 +66,16 @@ void Profiler::addEntry(const char* category, float time) {
 		pc.name = category;
 		numUsedCategories++;
 	}
-	pc.samples[frameIndex] = time;
+	pc.samples[frameIndex % MAX_FRAME_SAMPLES] = time;
 }
 
-char Profiler::getDelimiter(int index) const {
-	return ((index + 1) < numUsedCategories ? ',' : '\n');
+void Profiler::writeFrame(unsigned int frameNumber) const {
+	for (unsigned int cat = 0; cat < numUsedCategories; cat++) {
+		outStream << categories[cat].samples[frameNumber];
+		outStream << getDelimiter(cat);
+	}
+}
+
+bool Profiler::currentFrameComplete() const {
+	return categoryIndex == numUsedCategories;
 }
