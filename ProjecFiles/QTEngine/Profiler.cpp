@@ -1,4 +1,11 @@
 #include "Profiler.h"
+#ifdef PROFILING_ON
+Profiler Profiler::theInstance;
+
+Profiler& Profiler::getInstance() {
+	return theInstance;
+}
+
 #include <fstream>
 
 static std::ofstream outStream;
@@ -15,7 +22,7 @@ void Profiler::shutdown() {
 	writeData();
 }
 
-char Profiler::getDelimiter(int index) const {
+char Profiler::getDelimiter(unsigned int index) const {
 	return ((index + 1) < numUsedCategories ? ',' : '\n');
 }
 
@@ -26,7 +33,7 @@ bool Profiler::wrapped() const {
 void Profiler::writeData() const {
 	outStream.open(fileName, ios::trunc);
 	//headers
-	for (int i = 0; i < numUsedCategories; i++) {
+	for (unsigned int i = 0; i < numUsedCategories; i++) {
 		outStream << categories[i].name;
 		outStream << getDelimiter(i);
 	}
@@ -79,3 +86,5 @@ void Profiler::writeFrame(unsigned int frameNumber) const {
 bool Profiler::currentFrameComplete() const {
 	return categoryIndex == numUsedCategories;
 }
+
+#endif
