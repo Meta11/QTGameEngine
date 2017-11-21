@@ -13,6 +13,9 @@
     <Filter Include="Debug Tools\Profiling">
       <UniqueIdentifier>{b80039c6-2a78-4eb0-acf2-7f1b0fdab2b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Misc">
+      <UniqueIdentifier>{582dc8f5-8906-475f-b5cd-f5c7da3322ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clock.h">
@@ -25,6 +28,9 @@
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Profiler.h" />
+    <ClInclude Include="TypeDefs.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Vector3D.inl">
