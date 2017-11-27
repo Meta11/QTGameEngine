@@ -1,16 +1,18 @@
 #include "Profiler.h"
+
 #ifdef PROFILING_ON
 #include <fstream>
 #endif // PROFILING_ON
 
 namespace Profiling {
 
-#ifdef PROFILING_ON
 	Profiler Profiler::theInstance;
 
 	Profiler& Profiler::getInstance() {
 		return theInstance;
 	}
+
+#ifdef PROFILING_ON
 
 	static std::ofstream outStream;
 	using std::ios;

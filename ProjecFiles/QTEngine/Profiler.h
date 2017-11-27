@@ -6,13 +6,13 @@ namespace Profiling {
 	class __declspec(dllexport) Profiler {
 	public:
 		static const uint MAX_FRAME_SAMPLES = 1000;
+		static Profiler& getInstance();
 
 	private:
 		Profiler() {}
 		Profiler(const Profiler&);
 		Profiler& operator=(const Profiler&);
 		static Profiler theInstance;
-		static Profiler& getInstance();
 
 	#if PROFILING_ON
 		const char* fileName;
@@ -44,4 +44,6 @@ namespace Profiling {
 		void addEntry(const char* category, float time) {}
 	#endif
 	};
+
+#define profiler Profiling::Profiler::getInstance()
 }

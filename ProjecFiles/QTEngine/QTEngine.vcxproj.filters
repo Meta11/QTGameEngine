@@ -27,9 +27,11 @@
     <ClInclude Include="Matrix3D.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Profiler.h" />
     <ClInclude Include="TypeDefs.h">
       <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Profiler.h">
+      <Filter>Debug Tools\Profiling</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -44,6 +46,8 @@
     <ClCompile Include="Clock.cpp">
       <Filter>Timing</Filter>
     </ClCompile>
-    <ClCompile Include="Profiler.cpp" />
+    <ClCompile Include="Profiler.cpp">
+      <Filter>Debug Tools\Profiling</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
