@@ -8,32 +8,24 @@ namespace Timing {
 		if (!b) 
 			return false;
 		//Numero de ticks del primer frame
-		return QueryPerformanceCounter(&lastStartTime);
+		return QueryPerformanceCounter(&timeLastFrame);
 	}
 
 	bool Clock::shutdown() { return true; }
 
-	void Clock::start() {
-		//Numero de ticks del siguiente frame
-		QueryPerformanceCounter(&lastStartTime);
-	}
-
-	void Clock::stop() {
-		//Encontramos la diferencia entre el primer frame y el siguiente
+	void Clock::newFrame() {
 		LARGE_INTEGER thisTime;
+		//Numero de ticks del siguiente frame
 		QueryPerformanceCounter(&thisTime);
+		//Encontramos la diferencia entre el primer frame y el siguiente
 		LARGE_INTEGER delta;
-		delta.QuadPart = thisTime.QuadPart - lastStartTime.QuadPart;
+		delta.QuadPart = thisTime.QuadPart - timeLastFrame.QuadPart;
 		deltaTime = (float)delta.QuadPart / timeFrequency.QuadPart;
-		deltaLastLap.QuadPart = thisTime.QuadPart;
+		timeLastFrame.QuadPart = thisTime.QuadPart;
 	}
 
-	void Clock::lap() {
-		stop();	
-		start();
-	}
+	float Clock::timeElapsedLastFrame() const {
 
-	float Clock::lastLapTime() const {
 		return deltaTime;
 	}
 
