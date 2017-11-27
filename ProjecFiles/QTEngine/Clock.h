@@ -15,7 +15,7 @@ namespace Timing {
 		bool shutdown();
 		void start();
 		void stop();
-		void lap(); //newFrame
+		void lap();
 		float lastLapTime() const;
 	};
 
