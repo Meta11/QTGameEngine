@@ -33,6 +33,9 @@
     <ClInclude Include="Profiler.h">
       <Filter>Debug Tools\Profiling</Filter>
     </ClInclude>
+    <ClInclude Include="Profile.h">
+      <Filter>Debug Tools\Profiling</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Vector3D.inl">
@@ -47,6 +50,9 @@
       <Filter>Timing</Filter>
     </ClCompile>
     <ClCompile Include="Profiler.cpp">
+      <Filter>Debug Tools\Profiling</Filter>
+    </ClCompile>
+    <ClCompile Include="Profile.cpp">
       <Filter>Debug Tools\Profiling</Filter>
     </ClCompile>
   </ItemGroup>

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Clock.h" />
     <ClInclude Include="Matrix3D.h" />
+    <ClInclude Include="Profile.h" />
     <ClInclude Include="Profiler.h" />
     <ClInclude Include="TypeDefs.h" />
     <ClInclude Include="Vector3D.h" />
@@ -32,6 +33,7 @@
   <ItemGroup>
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Profiler.cpp" />
+    <ClCompile Include="Profile.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -33,7 +33,7 @@ namespace Timing {
 		start();
 	}
 
-	float Clock::timeElapsedLastFrame() const {
+	float Clock::lastLapTime() const {
 		return deltaTime;
 	}
 
