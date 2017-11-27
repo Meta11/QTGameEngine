@@ -70,7 +70,7 @@ void MyGLWindow::paintGL() {
 
 void MyGLWindow::myUpdate() {
 
-	myClock.newFrame();
+	myClock.lap();
 	shipPosition = shipPosition + shipVelocity * myClock.timeElapsedLastFrame();
 	updateVelocity();
 	updateRotation();
@@ -87,7 +87,7 @@ bool MyGLWindow::initialize() {
 bool MyGLWindow::shutDown() {
 	bool ret = true;
 	profiler.shutdown();
-	ret &= myClock.shutdown;
+	ret &= myClock.shutdown();
 	return ret;
 }
 
