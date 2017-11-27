@@ -5,6 +5,7 @@
 #include <Vector3D.h>
 #include <Matrix3D.h>
 #include <Profiler.h>
+#include <Profile.h>
 #include <Clock.h>
 
 using Math::Vector3D;
@@ -56,8 +57,13 @@ void MyGLWindow::paintGL() {
 	Vector3D transformedVerts[NUM_VERTS];
 	Matrix3D tMatrix = Matrix3D::translate(shipPosition);
 	Matrix3D rMatrix = Matrix3D::rotate(shipOrientation);
+	Matrix3D opMatrix;
 	
-	Matrix3D opMatrix = tMatrix*rMatrix;
+	{
+		Profiling::Profile p("Matrix Multiplication");
+		opMatrix = tMatrix*rMatrix; 
+	}
+	
 	for (unsigned int i = 0; i < NUM_VERTS; i++)
 		transformedVerts[i] = opMatrix*verts[i];
 
