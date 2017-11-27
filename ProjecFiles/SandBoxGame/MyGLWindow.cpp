@@ -70,8 +70,8 @@ void MyGLWindow::paintGL() {
 
 void MyGLWindow::myUpdate() {
 
-	myClock.newFrame();
-	shipPosition = shipPosition + shipVelocity * myClock.timeElapsedLastFrame();
+	myClock.lap();
+	shipPosition = shipPosition + shipVelocity * myClock.lastLapTime();
 	updateVelocity();
 	updateRotation();
 	repaint();
@@ -87,13 +87,13 @@ bool MyGLWindow::initialize() {
 bool MyGLWindow::shutDown() {
 	bool ret = true;
 	profiler.shutdown();
-	ret &= myClock.shutdown;
+	ret &= myClock.shutdown();
 	return ret;
 }
 
 void MyGLWindow::updateVelocity() {
 
-	Vector3D acc(0, shipAcceleration*myClock.timeElapsedLastFrame(), 0);
+	Vector3D acc(0, shipAcceleration*myClock.lastLapTime(), 0);
 	Matrix3D rMatrix = Matrix3D::rotate(shipOrientation);
 	if (GetAsyncKeyState(VK_UP)) {
 		shipVelocity = shipVelocity + rMatrix*acc;
@@ -103,7 +103,7 @@ void MyGLWindow::updateVelocity() {
 
 void MyGLWindow::updateRotation() {
 
-	const float angularVelocity = 2.0f*myClock.timeElapsedLastFrame();
+	const float angularVelocity = 2.0f*myClock.lastLapTime();
 
 	if (GetAsyncKeyState(VK_RIGHT)) shipOrientation -= angularVelocity;
 	if (GetAsyncKeyState(VK_LEFT)) shipOrientation += angularVelocity;
