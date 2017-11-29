@@ -16,7 +16,7 @@ namespace Math {
 
 		inline static Matrix3D rotate(float angleInRadiants = 0);
 		inline static Matrix3D translate(const Vector3D& source = Vector3D(0.0f, 0.0f, 0.0f));
-		inline static Matrix3D scale(const Vector3D& source = Vector3D(1.0f, 1.0f, 1.0f));
+		inline static Matrix3D scale(float x = 1, float y = 1);
 	};
 
 	inline Matrix3D operator+(const Matrix3D& l, const Matrix3D& r);

@@ -22,8 +22,8 @@ Matrix3D Matrix3D::translate(const Vector3D& source) {
 }
 
 
-Matrix3D Matrix3D::scale(const Vector3D& source) {
-	return Matrix3D(source.x, 0, 0,	source.y, 0, 0,	source.z, 0, 0);
+Matrix3D Matrix3D::scale(float x, float y) {
+	return Matrix3D(x, 0, 0, 0, y, 0, 0, 0, 1);
 }
 
 Matrix3D operator+(const Matrix3D& l, const Matrix3D& r) {

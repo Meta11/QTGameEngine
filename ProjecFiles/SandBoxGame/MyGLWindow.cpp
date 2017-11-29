@@ -70,11 +70,19 @@ void MyGLWindow::draw() {
 
 	Matrix3D tMatrix = Matrix3D::translate(shipPosition);
 	Matrix3D rMatrix = Matrix3D::rotate(shipOrientation);
+	float aspectRatio = static_cast<float> (width()) / height();
+	Matrix3D sMatrix;
+	
+	if (aspectRatio > 1)
+		sMatrix = Matrix3D::scale(1 / aspectRatio, 1);
+	else
+		sMatrix = Matrix3D::scale(1, aspectRatio);
+
 	Matrix3D opMatrix;
 
 	{
 		PROFILE("Matrix Multiplication");
-		opMatrix = tMatrix*rMatrix;
+		opMatrix = tMatrix*sMatrix*rMatrix;
 	}
 	{
 		PROFILE("Vector Transformation");
