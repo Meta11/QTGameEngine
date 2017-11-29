@@ -21,7 +21,7 @@ namespace {
 	};
 
 	static const unsigned int NUM_VERTS = sizeof(verts) / sizeof(*verts);
-
+	Vector3D transformedVerts[NUM_VERTS];
 	Vector3D shipPosition;
 	Vector3D shipVelocity;
 	float shipAcceleration = 0.5f;
@@ -46,7 +46,15 @@ void MyGLWindow::initializeGL() {
 	myTimer.start(0);
 }
 
-void MyGLWindow::paintGL() {
+void MyGLWindow::update() {
+	myClock.lap();
+	profiler.newFrame();
+	shipPosition = shipPosition + shipVelocity * myClock.lastLapTime();
+	updateVelocity();
+	updateRotation();
+}
+
+void MyGLWindow::doGL() {
 
 	glViewport(0, 0, width(), height());
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -54,32 +62,35 @@ void MyGLWindow::paintGL() {
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	Vector3D transformedVerts[NUM_VERTS];
-	Matrix3D tMatrix = Matrix3D::translate(shipPosition);
-	Matrix3D rMatrix = Matrix3D::rotate(shipOrientation);
-	Matrix3D opMatrix;
-	
-	{
-		Profiling::Profile p("Matrix Multiplication");
-		opMatrix = tMatrix*rMatrix; 
-	}
-	
-	for (unsigned int i = 0; i < NUM_VERTS; i++)
-		transformedVerts[i] = opMatrix*verts[i];
-
-	qDebug() << transformedVerts[0].x << " " << transformedVerts[0].y << " " << transformedVerts[0].z;
-
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(transformedVerts), transformedVerts);
-
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-void MyGLWindow::myUpdate() {
+void MyGLWindow::draw() {
 
-	myClock.lap();
-	shipPosition = shipPosition + shipVelocity * myClock.lastLapTime();
-	updateVelocity();
-	updateRotation();
+	Matrix3D tMatrix = Matrix3D::translate(shipPosition);
+	Matrix3D rMatrix = Matrix3D::rotate(shipOrientation);
+	Matrix3D opMatrix;
+
+	{
+		PROFILE("Matrix Multiplication");
+		opMatrix = tMatrix*rMatrix;
+	}
+	{
+		PROFILE("Vector Transformation");
+		for (unsigned int i = 0; i < NUM_VERTS; i++)
+			transformedVerts[i] = opMatrix*verts[i];
+	}
+	doGL();
+}
+
+void MyGLWindow::paintGL() {
+
+	update();
+	draw();
+}
+
+void MyGLWindow::myUpdate() {
 	repaint();
 }
 

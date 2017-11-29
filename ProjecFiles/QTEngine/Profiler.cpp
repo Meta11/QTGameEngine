@@ -1,5 +1,4 @@
 #include "Profiler.h"
-
 #ifdef PROFILING_ON
 #include <fstream>
 #endif // PROFILING_ON
@@ -19,6 +18,7 @@ namespace Profiling {
 
 	void Profiler::initialize(const char* fileName) {
 		this->fileName = fileName;
+		status = true;
 		frameIndex = -1;
 		categoryIndex = 0;
 		numUsedCategories = 0;
@@ -28,8 +28,29 @@ namespace Profiling {
 		writeData();
 	}
 
+	void Profiler::newFrame() {
+		frameIndex++;
+		categoryIndex = 0;
+	}
+
+	void Profiler::addEntry(const char* category, float time) {
+
+		ProfileCategory& pc = categories[categoryIndex];
+		if (frameIndex == 0) {
+			pc.name = category;
+			numUsedCategories++;
+		}
+		categoryIndex++;
+		pc.samples[frameIndex % MAX_FRAME_SAMPLES] = time;
+		checkForDuplicateCategory(category);
+	}
+
+	void Profiler::checkStatus(bool* status) const {
+		*status = status;
+	}
+
 	char Profiler::getDelimiter(uint index) const {
-		return ((index + 1) < numUsedCategories ? ',' : '\n');
+		return ((index + 1) < numUsedCategories) ? ',' : '\n';
 	}
 
 	bool Profiler::wrapped() const {
@@ -53,7 +74,8 @@ namespace Profiling {
 				writeFrame(startIndex);
 				startIndex = (startIndex + 1) % MAX_FRAME_SAMPLES;
 			}
-			writeFrame(startIndex);
+			if(currentFrameComplete())
+				writeFrame(startIndex);
 		}
 		else {
 			uint numActualFrames = frameIndex;
@@ -67,19 +89,8 @@ namespace Profiling {
 		outStream.close();
 	}
 
-	void Profiler::newFrame() {
-		frameIndex++;
-		categoryIndex = 0;
-	}
-
-	void Profiler::addEntry(const char* category, float time) {
-
-		ProfileCategory& pc = categories[categoryIndex++];
-		if (frameIndex == 0) {
-			pc.name = category;
-			numUsedCategories++;
-		}
-		pc.samples[frameIndex % MAX_FRAME_SAMPLES] = time;
+	bool Profiler::currentFrameComplete() const {
+		return categoryIndex == numUsedCategories;
 	}
 
 	void Profiler::writeFrame(uint frameNumber) const {
@@ -89,8 +100,10 @@ namespace Profiling {
 		}
 	}
 
-	bool Profiler::currentFrameComplete() const {
-		return categoryIndex == numUsedCategories;
+	void Profiler::checkForDuplicateCategory(const char* category) {
+		for (uint i = 0; i < categoryIndex; i++) {
+			status &= (strcmp(categories[i].name, category) != 0);
+		}
 	}
 
 #endif

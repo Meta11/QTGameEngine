@@ -17,6 +17,9 @@ protected:
 private:
 	void updateVelocity();
 	void updateRotation();
+	void update();
+	void doGL();
+	void draw();
 
 private slots:
 	void myUpdate();

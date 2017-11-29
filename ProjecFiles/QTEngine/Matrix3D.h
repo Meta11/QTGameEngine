@@ -26,6 +26,6 @@ namespace Math {
 	inline Vector3D operator*(const Matrix3D& l, const Vector3D& r);
 	inline Matrix3D operator*(const Matrix3D& l, const Matrix3D& r);
 
-#include "Matrix3D.inl";
+#include "Matrix3D.inl"
 
 }
