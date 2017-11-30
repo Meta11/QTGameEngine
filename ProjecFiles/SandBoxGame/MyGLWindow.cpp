@@ -13,15 +13,30 @@ using Math::Matrix3D;
 using Timing::Clock;
 
 namespace {
-	//Ponemos los vértices
-	static Vector3D verts[] = {
+	//Ponemos los vértices de la nave
+	static Vector3D shipVerts[] = {
 		Vector3D(+0.0f, +0.14142135623f, 1.0f),
 		Vector3D(-0.1f, -0.1f, 1.0f),
 		Vector3D(+0.1f, -0.1f, 1.0f)
 	};
 
-	static const unsigned int NUM_VERTS = sizeof(verts) / sizeof(*verts);
-	Vector3D transformedVerts[NUM_VERTS];
+	static Vector3D boundaryVerts[] = {
+		Vector3D(+0.0f, +1.0f, 1.0f),
+		Vector3D(-1.0f, -0.0f, 1.0f),
+		Vector3D(+0.0f, -1.0f, 1.0f),
+		Vector3D(+1.0f, -0.0f, 1.0f)
+	};
+
+	GLushort boundaryElementVerts[] = { 0,1,1,2,2,3,3,0 };
+
+	static const unsigned int NUM_SHIP_VERTS = sizeof(shipVerts) / sizeof(*shipVerts);
+	static const unsigned int NUM_BOUNDARY_VERTS = sizeof(boundaryVerts) / sizeof(*boundaryVerts);
+
+	GLuint shipVertexBufferID;
+	GLuint boundaryVertexBufferID;
+	GLuint boundaryElementsBufferID;
+
+	Vector3D transformedVerts[NUM_SHIP_VERTS];
 	Vector3D shipPosition;
 	Vector3D shipVelocity;
 	float shipAcceleration = 0.5f;
@@ -35,11 +50,17 @@ void MyGLWindow::initializeGL() {
 	glewInit();
 
 	//Generamos el array buffer
-	glGenBuffers(1, &vertexBufferID);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+	glGenBuffers(1, &shipVertexBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, shipVertexBufferID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(shipVerts), NULL, GL_DYNAMIC_DRAW);
 
-	//Llenamos el buffer con la data del array
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), NULL, GL_DYNAMIC_DRAW);
+	glGenBuffers(1, &boundaryVertexBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, boundaryVertexBufferID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(boundaryVerts), boundaryVerts, GL_STATIC_DRAW);
+
+	glGenBuffers(1, &boundaryElementsBufferID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, boundaryElementsBufferID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(boundaryElementVerts), boundaryElementVerts, GL_STATIC_DRAW);
 
 	connect(&myTimer, SIGNAL(timeout()), this, SLOT(myUpdate()));
 	//Tiempo de espera entre que se ejecuta un frame y el siguiente
@@ -52,18 +73,24 @@ void MyGLWindow::update() {
 	shipPosition = shipPosition + shipVelocity * myClock.lastLapTime();
 	updateVelocity();
 	updateRotation();
+	checkForBoundaries();
 }
 
 void MyGLWindow::doGL() {
 
 	glViewport(0, 0, width(), height());
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	glBindBuffer(GL_ARRAY_BUFFER, shipVertexBufferID);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(transformedVerts), transformedVerts);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(transformedVerts), transformedVerts);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	glBindBuffer(GL_ARRAY_BUFFER, boundaryVertexBufferID);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glDrawElements(GL_LINES, 8, GL_UNSIGNED_SHORT, 0);
 }
 
 void MyGLWindow::draw() {
@@ -86,8 +113,8 @@ void MyGLWindow::draw() {
 	}
 	{
 		PROFILE("Vector Transformation");
-		for (unsigned int i = 0; i < NUM_VERTS; i++)
-			transformedVerts[i] = opMatrix*verts[i];
+		for (unsigned int i = 0; i < NUM_SHIP_VERTS; i++)
+			transformedVerts[i] = opMatrix*shipVerts[i];
 	}
 	doGL();
 }
@@ -132,4 +159,21 @@ void MyGLWindow::updateRotation() {
 
 	if (GetAsyncKeyState(VK_RIGHT)) shipOrientation -= angularVelocity;
 	if (GetAsyncKeyState(VK_LEFT)) shipOrientation += angularVelocity;
+}
+
+void MyGLWindow::checkForBoundaries() {
+
+	for (int i = 0; i < NUM_BOUNDARY_VERTS; i++) {
+		Vector3D& second = boundaryVerts[(i + 1) % NUM_BOUNDARY_VERTS];
+		Vector3D& first = boundaryVerts[i % NUM_BOUNDARY_VERTS];
+		Vector3D wall = second - first;
+		Vector3D normal = wall.perpCcw();
+		Vector3D vect = shipPosition - first;
+		float result = normal.dot(vect);
+
+		if (result < 0)
+			qDebug() << "La nave está fuera de la pared" << (i + 1);
+		else
+			qDebug() << "";
+	}
 }

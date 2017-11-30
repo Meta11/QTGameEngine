@@ -7,7 +7,6 @@ class MyGLWindow : public QGLWidget {
 	
 	Q_OBJECT
 
-	GLuint vertexBufferID;
 	QTimer myTimer;
 
 protected:
@@ -20,6 +19,7 @@ private:
 	void update();
 	void doGL();
 	void draw();
+	void checkForBoundaries();
 
 private slots:
 	void myUpdate();
