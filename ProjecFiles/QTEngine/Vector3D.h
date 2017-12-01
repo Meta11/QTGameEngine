@@ -10,6 +10,8 @@ namespace Math {
 		inline Vector3D& operator+=(const Vector3D &right);
 		inline Vector3D& operator-=(const Vector3D &right);
 		inline float dot(const Vector3D& other) const;
+		inline float magnitude() const;
+		inline Vector3D Vector3D::normalize() const;
 		inline Vector3D perpCw() const;
 		inline Vector3D perpCcw() const;
 	};

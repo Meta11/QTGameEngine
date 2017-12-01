@@ -38,6 +38,18 @@ float Vector3D::dot(const Vector3D& other) const {
 	return (x*other.x + y*other.y + z*other.z);
 }
 
+float Vector3D::magnitude() const {
+	return sqrt(x*x + y*y + z*z);
+}
+
+Vector3D Vector3D::normalize() const{
+	float normalization = this->magnitude();
+	x / normalization;
+	y / normalization;
+	z / normalization;
+	return Vector3D(x / normalization, y / normalization, z / normalization);
+}
+
 Vector3D Vector3D::perpCw() const {
 	return Vector3D(y, -x);
 }

@@ -167,13 +167,11 @@ void MyGLWindow::checkForBoundaries() {
 		Vector3D& second = boundaryVerts[(i + 1) % NUM_BOUNDARY_VERTS];
 		Vector3D& first = boundaryVerts[i % NUM_BOUNDARY_VERTS];
 		Vector3D wall = second - first;
-		Vector3D normal = wall.perpCcw();
+		Vector3D normal = wall.perpCcw().normalize();
 		Vector3D vect = shipPosition - first;
 		float result = normal.dot(vect);
 
 		if (result < 0)
-			qDebug() << "La nave está fuera de la pared" << (i + 1);
-		else
-			qDebug() << "";
+			shipVelocity = shipVelocity - 2 * shipVelocity.dot(normal) * normal;
 	}
 }
