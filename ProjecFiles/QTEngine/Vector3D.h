@@ -15,6 +15,7 @@ namespace Math {
 		inline Vector3D Vector3D::normalize() const;
 		inline Vector3D perpCw() const;
 		inline Vector3D perpCcw() const;
+		inline Vector3D projectOnto(const Vector3D& target) const;
 	};
 
 	inline Vector3D operator+(const Vector3D &left, const Vector3D &right);

@@ -58,3 +58,7 @@ Vector3D Vector3D::perpCw() const {
 Vector3D Vector3D::perpCcw() const {
 	return Vector3D(-y, x);
 }
+
+Vector3D Vector3D::projectOnto(const Vector3D& target) const {
+	return (this->dot(target) / target.magnitudeSquared()) * target;
+}

@@ -155,7 +155,7 @@ void MyGLWindow::updateVelocity() {
 
 void MyGLWindow::updateRotation() {
 
-	const float angularVelocity = 2.0f*myClock.lastLapTime();
+	const float angularVelocity = 3.0f*myClock.lastLapTime();
 
 	if (GetAsyncKeyState(VK_RIGHT)) shipOrientation -= angularVelocity;
 	if (GetAsyncKeyState(VK_LEFT)) shipOrientation += angularVelocity;
@@ -167,11 +167,11 @@ void MyGLWindow::checkForBoundaries() {
 		Vector3D& second = boundaryVerts[(i + 1) % NUM_BOUNDARY_VERTS];
 		Vector3D& first = boundaryVerts[i % NUM_BOUNDARY_VERTS];
 		Vector3D wall = second - first;
-		Vector3D normal = wall.perpCcw().normalize();
+		Vector3D normal = wall.perpCcw();
 		Vector3D vect = shipPosition - first;
 		float result = normal.dot(vect);
 
 		if (result < 0)
-			shipVelocity = shipVelocity - 2 * shipVelocity.dot(normal) * normal;
+			shipVelocity = shipVelocity - 2 * shipVelocity.projectOnto(normal);
 	}
 }
