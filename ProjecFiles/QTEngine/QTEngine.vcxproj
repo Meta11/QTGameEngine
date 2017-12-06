@@ -20,9 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clock.h" />
+    <ClInclude Include="Geometry.h" />
     <ClInclude Include="Matrix3D.h" />
     <ClInclude Include="Profile.h" />
     <ClInclude Include="Profiler.h" />
+    <ClInclude Include="Renderable.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="TypeDefs.h" />
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>
@@ -34,6 +37,7 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="Profile.cpp" />
+    <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

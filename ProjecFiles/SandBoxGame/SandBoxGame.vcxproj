@@ -151,11 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MyGame.cpp" />
     <ClCompile Include="MyGLWindow.cpp" />
     <ClCompile Include="MyGLWindow_moc.cpp" />
     <ClCompile Include="SandBoxGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MyGame.h" />
     <ClInclude Include="MyGLWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -16,6 +16,9 @@
     <Filter Include="Misc">
       <UniqueIdentifier>{582dc8f5-8906-475f-b5cd-f5c7da3322ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Rendering">
+      <UniqueIdentifier>{312aaa46-4d7d-47aa-8016-075f2fd3909a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clock.h">
@@ -36,6 +39,15 @@
     <ClInclude Include="Profile.h">
       <Filter>Debug Tools\Profiling</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Vector3D.inl">
@@ -54,6 +66,9 @@
     </ClCompile>
     <ClCompile Include="Profile.cpp">
       <Filter>Debug Tools\Profiling</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Rendering</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

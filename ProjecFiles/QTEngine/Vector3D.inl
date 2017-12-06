@@ -1,21 +1,5 @@
 using Math::Vector3D;
 
-Vector3D operator+(const Vector3D &left, const Vector3D &right) {
-	return Vector3D(left.x + right.x, left.y + right.y, left.z + right.z);
-}
-
-Vector3D operator-(const Vector3D &left, const Vector3D &right) {
-	return Vector3D(left.x - right.x, left.y - right.y, left.z - right.z);
-}
-
-Vector3D operator*(float scalar, const Vector3D &vector) {
-	return Vector3D(scalar * vector.x, scalar * vector.y, scalar * vector.z);
-}
-
-Vector3D operator*(const Vector3D &vector, float scalar) {
-	return Vector3D(scalar * vector.x, scalar * vector.y, scalar * vector.z);
-}
-
 Vector3D& Vector3D::operator+=(const Vector3D &right) {
 
 	x += right.x;
@@ -61,4 +45,25 @@ Vector3D Vector3D::perpCcw() const {
 
 Vector3D Vector3D::projectOnto(const Vector3D& target) const {
 	return (this->dot(target) / target.magnitudeSquared()) * target;
+}
+
+
+Vector3D operator+(const Vector3D &left, const Vector3D &right) {
+	return Vector3D(left.x + right.x, left.y + right.y, left.z + right.z);
+}
+
+Vector3D operator-(const Vector3D &left, const Vector3D &right) {
+	return Vector3D(left.x - right.x, left.y - right.y, left.z - right.z);
+}
+
+Vector3D operator*(float scalar, const Vector3D &vector) {
+	return Vector3D(scalar * vector.x, scalar * vector.y, scalar * vector.z);
+}
+
+Vector3D operator*(const Vector3D &vector, float scalar) {
+	return Vector3D(scalar * vector.x, scalar * vector.y, scalar * vector.z);
+}
+
+Vector3D lerp(const Vector3D& source, const Vector3D& target, const float alpha) {
+	return ((1-alpha)*source + alpha*target);
 }
