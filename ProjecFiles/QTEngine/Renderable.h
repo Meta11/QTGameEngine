@@ -4,8 +4,9 @@
 namespace Rendering {
 	class Geometry;
 	class Renderable {
-	public:
+		friend class Renderer;
 		const Geometry* what;
+	public:
 		Math::Matrix3D where;
 	};
 }

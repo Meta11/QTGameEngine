@@ -1,5 +1,4 @@
 #pragma once
-
 #include <QtOpenGL\qgl.h>
 #include <QtCore\qtimer.h>
 

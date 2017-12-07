@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="MyGame.cpp" />
+    <ClCompile Include="MyGame_moc.cpp" />
     <ClCompile Include="MyGLWindow.cpp" />
     <ClCompile Include="MyGLWindow_moc.cpp" />
     <ClCompile Include="SandBoxGame.cpp" />

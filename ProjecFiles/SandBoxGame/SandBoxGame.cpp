@@ -1,19 +1,20 @@
 #include <QtWidgets\qapplication.h>
 #include <QtWidgets\qwidget.h>
 #include <QtCore\qdebug.h>
+#include "MyGame.h"
 #include "MyGLWindow.h"
 
 int main(int argc, char* argv[]) {
 
 	QApplication application(argc, argv);
-	MyGLWindow myGLWindow;
-	if (!myGLWindow.initialize())
+
+	MyGame myGame;
+	if (!myGame.initialize())
 		return -1;
-
-	myGLWindow.show();
-
+	myGame.go();
+	
 	int errorCode = application.exec();
-	if (!myGLWindow.shutDown())
+	if (!myGame.shutdown())
 		errorCode |= 1;
 
 	return errorCode;
