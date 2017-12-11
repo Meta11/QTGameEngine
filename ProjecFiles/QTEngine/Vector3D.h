@@ -1,8 +1,9 @@
 #pragma once
+#include <cmath>
 
 namespace Math {
 
-	struct Vector3D {
+	struct __declspec(dllexport) Vector3D {
 		float x, y, z;
 
 		explicit Vector3D(float a = 0.0f, float b = 0.0f,  float c = 0.0f) : x(a), y(b), z(c) {}

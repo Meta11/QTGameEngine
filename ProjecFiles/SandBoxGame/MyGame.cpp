@@ -1,6 +1,7 @@
 #include "MyGame.h"
-#include <stdio.h>
+#include <cstdlib>
 #include <Geometry.h>
+
 using Rendering::Geometry;
 using Math::Vector3D;
 
@@ -24,8 +25,15 @@ bool MyGame::initialize() {
 	connect(&myTimer, SIGNAL(timeout()), this, SLOT(update()));
 
 	Geometry* shipGeometry = renderer.addGeometry(shipVerts, NUM_SHIP_VERTS, shipIndices, NUM_SHIP_INDICES, GL_TRIANGLES);
-	shipInstance = renderer.addRenderable(shipGeometry);
-	//lerpInstance = renderer.addRenderable(shipGeometry);
+	shipRenderable = renderer.addRenderable(shipGeometry);
+	shipRenderer.setData(shipRenderable);
+	ship.addComponent(&shipRenderer);
+	shipPhysics.velocity.x = 0.01f;
+	ship.addComponent(&shipPhysics);
+
+	if (!ship.initialize())
+		return false;
+
 	return true;
 }
 
@@ -34,6 +42,7 @@ bool MyGame::shutdown() {
 }
 
 void MyGame::update() {
+	ship.update();
 	renderer.renderScene();
 }
 

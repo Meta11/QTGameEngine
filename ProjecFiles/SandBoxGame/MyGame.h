@@ -3,6 +3,10 @@
 #include <QtCore\qtimer.h>
 #include <Renderer.h>
 #include <Vector3D.h>
+#include <Entity.h>
+#include <PhysicsComponent.h>
+#include <RendererComponent.h>
+
 namespace Rendering { class Renderable; }
 
 class MyGame : public QObject {
@@ -10,9 +14,13 @@ class MyGame : public QObject {
 
 	QTimer myTimer;
 
+	Entities::Entity ship;
+	Entities::RendererComponent shipRenderer;
+	Entities::PhysicsComponent shipPhysics;
+
 	Rendering::Renderer renderer;
-	Rendering::Renderable* shipInstance;
-	Rendering::Renderable* lerpInstance;
+	Rendering::Renderable* shipRenderable;
+	Rendering::Renderable* lerpRenderable;
 
 	static const uint NUM_SHIP_VERTS = 3;
 	Math::Vector3D shipVerts[NUM_SHIP_VERTS];

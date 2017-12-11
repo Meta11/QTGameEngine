@@ -16,7 +16,6 @@ namespace Rendering {
 
 	void Renderer::initializeGL() {
 		glewInit();
-
 		glClearColor(0, 0, 0, 1);
 
 		glGenBuffers(1, &vertexBufferID);
@@ -66,6 +65,7 @@ namespace Rendering {
 	}
 
 	void Renderer::paintGL() {
+
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		Vector3D transformedVerts[MAX_VERTS];

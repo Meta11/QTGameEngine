@@ -20,11 +20,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Clock.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Geometry.h" />
+    <ClInclude Include="IKeyMapper.h" />
+    <ClInclude Include="KeyInput.h" />
     <ClInclude Include="Matrix3D.h" />
+    <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="Profile.h" />
     <ClInclude Include="Profiler.h" />
     <ClInclude Include="Renderable.h" />
+    <ClInclude Include="RendererComponent.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="TypeDefs.h" />
     <ClInclude Include="Vector3D.h" />
@@ -35,8 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="KeyInput.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Profiler.cpp" />
     <ClCompile Include="Profile.cpp" />
+    <ClCompile Include="RendererComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -126,7 +137,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>PROFILING_ON;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;PROFILING_ON;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>

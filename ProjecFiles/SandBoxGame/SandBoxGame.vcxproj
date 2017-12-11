@@ -106,7 +106,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>PROFILING_ON;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;PROFILING_ON;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -155,11 +155,14 @@
     <ClCompile Include="MyGame_moc.cpp" />
     <ClCompile Include="MyGLWindow.cpp" />
     <ClCompile Include="MyGLWindow_moc.cpp" />
+    <ClCompile Include="MyKeyMapper.cpp" />
     <ClCompile Include="SandBoxGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="MyGLWindow.h" />
+    <ClInclude Include="MyKeyMapper.h" />
+    <ClInclude Include="MyMenuChoice.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
