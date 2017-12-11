@@ -6,6 +6,7 @@ namespace Entities {
 
 	Entity::Entity() {
 		numComponents = 0;
+		orientation = 0;
 	}
 
 	bool Entity::initialize() {
@@ -16,6 +17,9 @@ namespace Entities {
 	}
 
 	bool Entity::shutdown() {
+		for (uint i = 0; i < numComponents; i++)
+			if (!components[i]->shutdown())
+				return false;
 		return true;
 	}
 

@@ -10,6 +10,7 @@ namespace Entities {
 	}
 
 	void RendererComponent::update() {
-		renderable->where = Math::Matrix3D::translate(getParent()->position);
+		renderable->where = Math::Matrix3D::translate(getParent()->position) *
+			                Math::Matrix3D::rotate(getParent()->orientation);
 	}
 }

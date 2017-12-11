@@ -7,11 +7,13 @@
     <ClCompile Include="MyGame_moc.cpp" />
     <ClCompile Include="MyGLWindow_moc.cpp" />
     <ClCompile Include="MyKeyMapper.cpp" />
+    <ClCompile Include="ControllerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="MyGLWindow.h" />
     <ClInclude Include="MyKeyMapper.h" />
     <ClInclude Include="MyMenuChoice.h" />
+    <ClInclude Include="ControllerComponent.h" />
   </ItemGroup>
 </Project>

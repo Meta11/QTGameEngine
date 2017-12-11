@@ -11,12 +11,25 @@ namespace Entities {
 		uint numComponents;
 	public:
 		Math::Vector3D position;
+		float orientation;
 		Entity();
 		bool initialize();
 		bool shutdown();
 		void addComponent(Component* component);
 		void update();
+		template<class T>
+		T* getComponent() const;
 	};
+
+	template<class T>
+	T* Entity::getComponent() const {
+		for (uint i = 0; i < numComponents; i++) {
+			T* ret = dynamic_cast<T*>(components[i]);
+			if (ret != nullptr)
+				return ret;
+		}
+		return 0;
+	}
 }
 
 

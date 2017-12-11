@@ -6,12 +6,12 @@ namespace Input {
 
 	int MyKeyMapper::getKeyFor(int action) const {
 		switch (action) {
-			case VK_UP:
-				return Accelerate;
-			case VK_LEFT:
-				return RotateLeft;
-			case VK_RIGHT:
-				return RotateRight;
+			case Accelerate:
+				return VK_UP;
+			case RotateLeft:
+				return VK_LEFT;
+			case RotateRight:
+				return VK_RIGHT;
 		}
 		return -1;
 	}

@@ -1,7 +1,10 @@
 #include <GL\glew.h>
 #include "Renderer.h"
 #include "Vector3D.h"
+#include "Matrix3D.h"
+
 using Math::Vector3D;
+using Math::Matrix3D;
 
 namespace Rendering {
 
@@ -16,8 +19,8 @@ namespace Rendering {
 
 	void Renderer::initializeGL() {
 		glewInit();
-		glClearColor(0, 0, 0, 1);
 
+		glClearColor(0, 0, 0, 1);
 		glGenBuffers(1, &vertexBufferID);
 		glGenBuffers(1, &indexBufferID);
 
@@ -64,8 +67,18 @@ namespace Rendering {
 
 	}
 
+	Matrix3D Renderer::getAspectCorrectionMatrix() const {
+		float aspectRatio = static_cast<float> (width()) / height();
+
+		if (aspectRatio > 1)
+			return Matrix3D::scale(1 / aspectRatio, 1);
+		else
+			return Matrix3D::scale(1, aspectRatio);
+	}
+
 	void Renderer::paintGL() {
 
+		glViewport(0, 0, width(), height());
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		Vector3D transformedVerts[MAX_VERTS];
@@ -76,8 +89,9 @@ namespace Rendering {
 			//indices
 			glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(ushort) * r.what->numIndices, r.what->indices);
 			//vertices
+			Matrix3D op = getAspectCorrectionMatrix() * r.where;
 			for (uint i = 0; i < r.what->numVerts; i++)
-				transformedVerts[i] = r.where * r.what->vertices[i];
+				transformedVerts[i] = op * r.what->vertices[i];
 			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vector3D)*r.what->numVerts, transformedVerts);
 			glDrawElements(r.what->renderMode, r.what->numIndices, GL_UNSIGNED_SHORT, 0);
 		}

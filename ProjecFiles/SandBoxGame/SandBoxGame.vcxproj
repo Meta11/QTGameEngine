@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ControllerComponent.cpp" />
     <ClCompile Include="MyGame.cpp" />
     <ClCompile Include="MyGame_moc.cpp" />
     <ClCompile Include="MyGLWindow.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="SandBoxGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ControllerComponent.h" />
     <ClInclude Include="MyGame.h" />
     <ClInclude Include="MyGLWindow.h" />
     <ClInclude Include="MyKeyMapper.h" />

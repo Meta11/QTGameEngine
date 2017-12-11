@@ -19,9 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BoundaryHandlerComponent.h" />
     <ClInclude Include="Clock.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="GameClock.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="IKeyMapper.h" />
     <ClInclude Include="KeyInput.h" />
@@ -40,9 +42,11 @@
     <None Include="Vector3D.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoundaryHandlerComponent.cpp" />
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GameClock.cpp" />
     <ClCompile Include="KeyInput.cpp" />
     <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Profiler.cpp" />

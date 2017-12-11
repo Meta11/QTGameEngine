@@ -4,6 +4,8 @@
 
 namespace Input {
 
+	KeyInput KeyInput::instance;
+
 	bool KeyInput::intialize(IKeyMapper* keyMapper, int maxActionValue) {
 		if (keyMapper == nullptr || maxActionValue < 0)
 			return false;
@@ -27,7 +29,11 @@ namespace Input {
 		}
 	}
 
-	bool KeyInput::actionsHotThisFrame(int actions) const {
+	bool KeyInput::actionsHot(int actions) const {
 		return (_actionsThisFrame & actions) == actions;
+	}
+
+	KeyInput& KeyInput::getInstance() {
+		return instance;
 	}
 }

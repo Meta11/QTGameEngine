@@ -5,6 +5,7 @@
 #include "Renderable.h"
 
 namespace Math { struct Vector3D; }
+namespace Math { struct Matrix3D; }
 
 namespace Rendering {
 
@@ -19,6 +20,8 @@ namespace Rendering {
 		GLuint vertexBufferID;
 		GLuint indexBufferID;
 		static const uint MAX_VERTS = 10;
+		Math::Matrix3D getAspectCorrectionMatrix() const;
+
 	protected:
 		void initializeGL();
 		void paintEvent();
